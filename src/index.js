@@ -43,6 +43,9 @@ const processMove = e => {
         moveTo: moveTo
       },
       success: (result) => {
+        if (!result.moved) {
+          return;
+        }
         let matrix = result.board;
         console.log('success', matrix);
         for (let i = 0; i < matrix.length; i++) {
