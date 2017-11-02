@@ -1,5 +1,6 @@
 const board = document.querySelector('#board');
 const squares = document.querySelectorAll('.square');
+const turnDisplay = document.querySelector('#turn');
 
 const input = document.querySelector('form');
 
@@ -41,7 +42,8 @@ const processMove = e => {
         moveFrom: moveFrom,
         moveTo: moveTo
       },
-      success: (matrix) => {
+      success: (result) => {
+        let matrix = result.board;
         console.log('success', matrix);
         for (let i = 0; i < matrix.length; i++) {
           for (let j = 0; j < matrix[i].length; j++) {
@@ -66,7 +68,7 @@ const processMove = e => {
             } 
           }
         }
-
+        turnDisplay.innerHTML = result.turn ? 'Black' : 'Red';
       },
       error: (err) => {
         console.log('err', err);

@@ -65,19 +65,19 @@ app.post('/move', function(req, res) {
   let current = turn ? 'b' : 'r';
   if (board[moveFromRow][moveFromCol] !== current) {
     console.log('your piece is not there!');
-    res.send(board);
+    res.send({board: board, turn: turn});
     return;
   }
 
   if ( !((moveToRow + moveToCol) % 2 ) ) {
     console.log('can only move to dark gray spots!');
-    res.send(board);
+    res.send({board: board, turn: turn});
     return;
   }
   board[moveFromRow][moveFromCol] = 0;
   board[moveToRow][moveToCol] = turn ? 'b' : 'r';
   turn = !turn;
-  res.send(board);
+  res.send({board: board, turn: turn});
 });
 
 app.listen(3001, function() {
