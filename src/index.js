@@ -29,23 +29,27 @@ const processMove = e => {
   const moveFrom = e.path[0][0].value;
   const moveTo = e.path[0][1].value;
   input.reset();
-  console.log(moveFrom, moveTo);
-  // if (moveFrom.length !== 2 || moveTo.length !== 2 || !isNaN(Number(moveFrom[0])) || isNaN(Number(moveFrom[1])) || !isNaN(Number(moveTo[0])) || isNaN(Number(moveTo[1])) || moveFrom[0] > 'H' || moveTo[0] > 'H') {
   if (!validateInput(moveFrom, moveTo)) {
     window.alert(`Enter a valid input - Letter then Number - eg. A1. Your moves of '${moveFrom}' and / or '${moveTo}' did not satisfy that requirement.`);
   } else {
-    console.log('valid');
-    // $.ajax({
-    //   url: '/move', 
-    //   type: 'POST',
-    //   data: data,
-    //   success: (data) => {
-    //     console.log('success', data);
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+    console.log('valid', moveFrom, moveTo);
+    $.ajax({
+      url: '/move', 
+      type: 'POST',
+      data: {
+        moveFrom: moveFrom,
+        moveTo: moveTo
+      },
+      success: (res) => {
+        console.log('success', res);
+
+
+
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
 };
 
