@@ -47,7 +47,6 @@ const processMove = e => {
           for (let j = 0; j < matrix[i].length; j++) {
             // add and remove classes on HTML to update matrix
             let current = squares[(8 * i) + j];
-            console.log(current);
             if (current.classList.contains('piece')) {
               current.classList.remove('piece');
             }

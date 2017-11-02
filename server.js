@@ -37,14 +37,46 @@ const initializeBoard = () => {
 };
 
 const board = initializeBoard();
+let turn = true;
+
+const colConverter = {
+  'A': 0,
+  'B': 1,
+  'C': 2,
+  'D': 3,
+  'E': 4,
+  'F': 5,
+  'G': 6,
+  'H': 7
+};
 
 app.get('/', function(req, res) {
   res.send('getting');
 });
 
 app.post('/move', function(req, res) {
-  console.log('posted');
-  console.log(req.body);
+  console.log('posted', req.body);
+  let moveFromCol = colConverter[req.body.moveFrom[0]];
+  let moveToCol = colConverter[req.body.moveTo[0]];
+  let moveFromRow = Number(req.body.moveFrom[1]) - 1;
+  let moveToRow = Number(req.body.moveTo[1]) - 1;
+  console.log(moveFromRow, moveFromCol, moveToRow, moveToCol);
+  console.log(board[moveFromRow][moveFromCol]);
+  let current = turn ? 'b' : 'r';
+  if (board[moveFromRow][moveFromCol] !== current) {
+    console.log('your piece is not there!');
+    res.send(board);
+    return;
+  }
+
+  if ( !((moveToRow + moveToCol) % 2 ) ) {
+    console.log('can only move to dark gray spots!');
+    res.send(board);
+    return;
+  }
+  board[moveFromRow][moveFromCol] = 0;
+  board[moveToRow][moveToCol] = turn ? 'b' : 'r';
+  turn = !turn;
   res.send(board);
 });
 
