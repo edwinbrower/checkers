@@ -1,4 +1,5 @@
 const board = document.querySelector('#board');
+const squares = document.querySelectorAll('.square');
 
 const input = document.querySelector('form');
 
@@ -40,10 +41,32 @@ const processMove = e => {
         moveFrom: moveFrom,
         moveTo: moveTo
       },
-      success: (res) => {
-        console.log('success', res);
-
-
+      success: (matrix) => {
+        console.log('success', matrix);
+        for (let i = 0; i < matrix.length; i++) {
+          for (let j = 0; j < matrix[i].length; j++) {
+            // add and remove classes on HTML to update matrix
+            let current = squares[(8 * i) + j];
+            console.log(current);
+            if (current.classList.contains('piece')) {
+              current.classList.remove('piece');
+            }
+            if (current.classList.contains('black')) {
+              current.classList.remove('black');
+            }
+            if (current.classList.contains('red')) {
+              current.classList.remove('red');
+            }
+            if (matrix[i][j] === 'r') {
+              current.classList.add('piece');
+              current.classList.add('red');
+            }
+            if (matrix[i][j] === 'b') {
+              current.classList.add('piece');              
+              current.classList.add('black');
+            } 
+          }
+        }
 
       },
       error: (err) => {
