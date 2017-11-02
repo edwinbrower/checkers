@@ -28,3 +28,17 @@
 .light {
   background-color: lightgray; 
 }
+
+.piece {
+  width: 35px;
+  height: 35px;
+  border: 20px solid darkgray;
+}
+
+.red {
+  background-color: red;
+}
+
+.black {
+  background-color: black;
+}
