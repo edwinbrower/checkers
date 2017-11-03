@@ -44,6 +44,7 @@ const processMove = e => {
       },
       success: (result) => {
         if (!result.moved) {
+          window.alert('Move was invalid -- try again!');
           return;
         }
         let matrix = result.board;

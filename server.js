@@ -62,7 +62,9 @@ app.post('/move', function(req, res) {
   let moveToRow = Number(req.body.moveTo[1]) - 1;
   console.log(moveFromRow, moveFromCol, moveToRow, moveToCol);
   console.log(board[moveFromRow][moveFromCol]);
+
   let current = turn ? 'b' : 'r';
+
   if (board[moveFromRow][moveFromCol] !== current) {
     console.log('your piece is not there!');
     res.send({board: board, turn: turn, moved: false});
@@ -74,9 +76,53 @@ app.post('/move', function(req, res) {
     res.send({board: board, turn: turn, moved: false});
     return;
   }
+
+  if (board[moveToRow][moveToCol] !== 0) {
+    console.log('A piece is already there! Try again');
+    res.send({board: board, turn: turn, moved: false});
+    return;
+  }
+
+  if (!(moveFromRow - moveToRow) || !(moveFromCol - moveToCol) ) {
+    console.log('Need to move both rows and cols');
+    res.send({board: board, turn: turn, moved: false});
+    return;
+  }
+
+  let rowDiff = Math.abs(moveFromRow - moveToRow);
+  let colDiff = moveFromCol - moveToCol;
+  if (turn) {
+    // black moves up
+    if ( colDiff > 2 || rowDiff > 2) {
+      console.log('Invalid move black');
+      res.send({board: board, turn: turn, moved: false});
+      return;
+    }
+  } else {
+    // red moves down
+    if ( colDiff < -2 || rowDiff > 2) {
+      console.log('Invalid move red');
+      res.send({board: board, turn: turn, moved: false});
+      return;
+    }
+  }
+
+  // if (rowDiff === 2) {
+  //   if (moveFromRow - moveToRow === 2) { //left
+  //     if (turn) {
+  //       if (board[moveFromRow - 1][moveToCol])
+        
+  //     }
+  //   } else { // right
+
+  //   }
+  // }
+
   board[moveFromRow][moveFromCol] = 0;
   board[moveToRow][moveToCol] = turn ? 'b' : 'r';
+
   turn = !turn;
+
   res.send({board: board, turn: turn, moved: true});
 });
 
